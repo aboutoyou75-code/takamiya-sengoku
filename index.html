@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鷹宮家 戦記 ― コメントで決まる戦国シミュレーション</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+:root{
+--ink:#101736; --ink2:#1a2350; --gold:#e8c15a; --gold2:#b98a2f;
+--paper:#f3ead2; --red:#c8433c; --blue:#3f6fb5; --green:#4d8a4f;
+--text:#e9e4d2; --sub:#a9a58f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--text);font-family:"DotGothic16",sans-serif;line-height:1.7}
+a{color:var(--gold)}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 64px}
+header{text-align:center;padding:36px 0 8px}
+header img.crest{width:120px;height:120px;image-rendering:pixelated}
+h1{font-size:2rem;color:var(--gold);letter-spacing:.15em;margin-top:8px}
+.lord{color:var(--sub);margin-top:4px}
+.phase{display:inline-block;margin-top:12px;border:2px solid var(--gold);color:var(--gold);padding:2px 14px;border-radius:2px}
+.hero{margin:24px 0;border:3px solid var(--gold2);line-height:0}
+.hero img{width:100%;image-rendering:pixelated}
+section{margin-top:36px}
+h2{font-size:1.3rem;color:var(--gold);border-bottom:2px solid var(--gold2);padding-bottom:6px;margin-bottom:14px;letter-spacing:.08em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--ink2);border:2px solid #2c3870;padding:10px;text-align:center}
+.stat.num{font-size:1.6rem;color:#fff}
+.stat.lbl{color:var(--sub);font-size:.85rem}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.prov{background:var(--ink2);border:2px solid #2c3870;padding:14px 6px;text-align:center;min-height:92px}
+.prov.nm{font-size:1.05rem;color:#fff}
+.prov.ow{font-size:.85rem;color:var(--sub)}
+.prov.nt{font-size:.8rem;color:var(--sub)}
+.prov.own{border-color:var(--gold);background:#2a2a12}
+.prov.own.nm{color:var(--gold)}
+.prov.kuro{border-color:#555}
+.prov.ao{border-color:var(--blue)}
+.prov.aka{border-color:var(--red)}
+.card{background:var(--ink2);border:2px solid #2c3870;padding:16px}
+.card h3{color:#fff;margin-bottom:6px}
+.empty{color:var(--sub)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #2c3870;padding:6px 10px;text-align:left}
+th{color:var(--gold)}
+.chron p{margin-bottom:10px}
+.chron.day{color:var(--gold)}
+ol.rules{margin-left:1.4em}
+ol.rules li{margin-bottom:8px}
+footer{margin-top:48px;text-align:center;color:var(--sub);font-size:.85rem}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:1.5rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<img class="crest" src="assets/kamon.webp" alt="鷹宮家の家紋（違い鷹の羽）">
+<h1 id="clanName">鷹宮家 戦記</h1>
+<div class="lord" id="lordLine">当主：鷹宮義鷹</div>
+<div><span class="phase" id="phase">旗揚げ前夜</span></div>
+</header>
+
+<div class="hero"><img src="assets/castle.webp" alt="鷹宮家の山城と軍議の陣"></div>
+
+<section>
+<h2>いまの勢力</h2>
+<div class="stats" id="stats"></div>
+</section>
+
+<section>
+<h2>勢力図</h2>
+<div class="map" id="map"></div>
+</section>
+
+<section>
+<h2>今回の軍議</h2>
+<div class="card">
+<h3 id="councilTitle"></h3>
+<p id="councilText"></p>
+</div>
+</section>
+
+<section>
+<h2>家臣名簿</h2>
+<div id="retainers"></div>
+</section>
+
+<section>
+<h2>戦死者名簿</h2>
+<div id="fallen"></div>
+</section>
+
+<section>
+<h2>戦記</h2>
+<div class="chron" id="chronicle"></div>
+</section>
+
+<section>
+<h2>参加のしかた</h2>
+<ol class="rules">
+<li>フォローすると「仕官」となり、家臣名簿に名前が載ります。</li>
+<li>各回の投稿で「軍議」が開かれます。コメントで案を出すか、良い案に「いいね」を押してください。</li>
+<li>いいねが一番多い案が採用されます。ただし、採用されても勝てるとは限りません。結果は兵力・兵糧と運で決まります。</li>
+<li>案が採用されると手柄となり、足軽から家老へ昇進します。</li>
+<li>合戦では家臣が戦死することがあります。戦死した家臣は戦死者名簿に名前が残り、二度と戻りません。</li>
+<li>本拠地が落ちれば、鷹宮家は滅亡し、この戦記は終わります。</li>
+</ol>
+</section>
+
+<footer>
+<p>鷹宮家 戦記 ― コメントで決まる戦国シミュレーション</p>
+<p>Instagram の投稿で物語が進みます。このページは投稿のたびに更新されます。</p>
+</footer>
+</div>
+
+<script>
+fetch('state.json').then(r=>r.json()).then(s=>{
+document.getElementById('clanName').textContent = s.clan + ' 戦記';
+document.getElementById('lordLine').textContent = '当主：' + s.lord + '／家紋：' + s.crestName;
+document.getElementById('phase').textContent = '第' + s.season + 'シーズン・' + s.phase;
+const labels = {castles:'城', troops:'兵力', gold:'金', food:'兵糧', morale:'民心', retainers:'家臣'};
+document.getElementById('stats').innerHTML =
+Object.keys(labels).map(k=>'<div class="stat"><div class="num">'+s.stats[k]+'</div><div class="lbl">'+labels[k]+'</div></div>').join('');
+const cls = {'鷹宮家':'own','黒嶺家':'kuro','蒼海家':'ao','赤松家':'aka'};
+document.getElementById('map').innerHTML =
+s.provinces.map(p=>'<div class="prov '+(cls[p.owner]||'')+'"><div class="nm">'+p.name+'</div><div class="ow">'+p.owner+'</div><div class="nt">'+p.note+'</div></div>').join('');
+document.getElementById('councilTitle').textContent = s.currentCouncil.title;
+document.getElementById('councilText').textContent = s.currentCouncil.text;
+document.getElementById('retainers').innerHTML = s.retainers.length
+? '<table><tr><th>名前</th><th>役職</th><th>手柄</th></tr>'+s.retainers.map(r=>'<tr><td>'+r.name+'</td><td>'+r.rank+'</td><td>'+r.deeds+'</td></tr>').join('')+'</table>'
+: '<p class="empty">まだ家臣はいません。最初のフォロワーが、最初の家臣になります。</p>';
+document.getElementById('fallen').innerHTML = s.fallen.length
+? '<table><tr><th>名前</th><th>戦死した合戦</th></tr>'+s.fallen.map(f=>'<tr><td>'+f.name+'</td><td>'+f.battle+'</td></tr>').join('')+'</table>'
+: '<p class="empty">まだ戦死者はいません。</p>';
+document.getElementById('chronicle').innerHTML =
+s.chronicle.map(c=>'<p><span class="day">'+c.title+'</span><br>'+c.text+'</p>').join('');
+});
+</script>
+</body>
+</html>
