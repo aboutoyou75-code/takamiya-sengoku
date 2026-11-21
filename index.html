@@ -79,6 +79,7 @@ footer{margin-top:48px;text-align:center;color:var(--sub);font-size:.85rem}
 <div class="card">
 <h3 id="councilTitle"></h3>
 <p id="councilText"></p>
+<div id="councilOptions" style="margin-top:10px"></div>
 </div>
 </section>
 
@@ -101,9 +102,10 @@ footer{margin-top:48px;text-align:center;color:var(--sub);font-size:.85rem}
 <h2>参加のしかた</h2>
 <ol class="rules">
 <li>フォローすると「仕官」となり、家臣名簿に名前が載ります。</li>
-<li>各回の投稿で「軍議」が開かれます。コメントで案を出すか、良い案に「いいね」を押してください。</li>
-<li>いいねが一番多い案が採用されます。ただし、採用されても勝てるとは限りません。結果は兵力・兵糧と運で決まります。</li>
-<li>案が採用されると手柄となり、足軽から家老へ昇進します。</li>
+<li>各回の動画で「軍議」が開かれます。コメントで A・B・C・D のどれかを答えてください。一番多い選択肢が採用されます。</li>
+<li>Dは自由な提案です。Dが一番多いときは、Dの提案の中で「いいね」が一番多いものを採用します。</li>
+<li>ただし、採用されても勝てるとは限りません。結果は兵力・兵糧と運で決まります。集計結果は票数つきで、次回の動画とこのページの戦記に公開されます。</li>
+<li>自分の案が採用の決め手になると手柄となり、足軽から家老へ昇進します。</li>
 <li>合戦では家臣が戦死することがあります。戦死した家臣は戦死者名簿に名前が残り、二度と戻りません。</li>
 <li>本拠地が落ちれば、鷹宮家は滅亡し、この戦記は終わります。</li>
 </ol>
@@ -128,6 +130,10 @@ document.getElementById('map').innerHTML =
 s.provinces.map(p=>'<div class="prov '+(cls[p.owner]||'')+'"><div class="nm">'+p.name+'</div><div class="ow">'+p.owner+'</div><div class="nt">'+p.note+'</div></div>').join('');
 document.getElementById('councilTitle').textContent = s.currentCouncil.title;
 document.getElementById('councilText').textContent = s.currentCouncil.text;
+if (s.currentCouncil.options) {
+  document.getElementById('councilOptions').innerHTML =
+    s.currentCouncil.options.map(o=>'<p><strong style="color:var(--gold)">'+o.key+'</strong>　'+o.label+'</p>').join('');
+}
 document.getElementById('retainers').innerHTML = s.retainers.length
 ? '<table><tr><th>名前</th><th>役職</th><th>手柄</th></tr>'+s.retainers.map(r=>'<tr><td>'+r.name+'</td><td>'+r.rank+'</td><td>'+r.deeds+'</td></tr>').join('')+'</table>'
 : '<p class="empty">まだ家臣はいません。最初のフォロワーが、最初の家臣になります。</p>';
